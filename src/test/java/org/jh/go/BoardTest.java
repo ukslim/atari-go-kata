@@ -7,7 +7,7 @@ import org.junit.Test;
 public class BoardTest {
     @Test
     public void alive_when_alone() {
-        assertOutcome(
+        check(
                 "...",
                 ".O.",
                 "...");
@@ -15,7 +15,7 @@ public class BoardTest {
     
     @Test
     public void alive_when_one_neighbour_below() {
-        assertOutcome(
+        check(
                 "...",
                 ".O.",
                 ".@.");
@@ -23,7 +23,7 @@ public class BoardTest {
     
     @Test
     public void alive_when_one_neighbour_left() {
-        assertOutcome(
+        check(
                 "...",
                 "@O.",
                 "...");
@@ -31,7 +31,7 @@ public class BoardTest {
     
     @Test
     public void alive_when_one_neighbour_above() {
-        assertOutcome(
+        check(
                 ".@.",
                 ".O.",
                 "...");
@@ -39,7 +39,7 @@ public class BoardTest {
     
     @Test
     public void alive_when_one_neighbour_right() {
-        assertOutcome(
+        check(
                 "...",
                 ".O@",
                 "...");
@@ -47,7 +47,7 @@ public class BoardTest {
     
     @Test
     public void alive_when_three_neighbours() {
-        assertOutcome(
+        check(
                 "...",
                 "@O@",
                 ".@.");
@@ -55,7 +55,7 @@ public class BoardTest {
     
     @Test
     public void dying_when_surrounded() {
-        assertOutcome(
+        check(
                 ".....",
                 "..@..",
                 ".@X@.",
@@ -64,14 +64,14 @@ public class BoardTest {
     }
     
     @Test public void dying_when_surrounded_on_top_edge() {
-        assertOutcome(
+        check(
                 ".@X@.",
                 "..@..",
                 ".....");
     }
     
     @Test public void dying_when_surrounded_on_left_edge() {
-        assertOutcome(
+        check(
                 "...",
                 "@..",
                 "X@.",
@@ -80,42 +80,42 @@ public class BoardTest {
     }
     
     @Test public void dying_when_surrounded_on_bottom() {
-        assertOutcome(
+        check(
                 "...",
                 ".@.",
                 "@X@");
     }
     
     @Test public void dying_when_surrounded_on_right() {
-        assertOutcome(
+        check(
                 "..@",
                 ".@X",
                 "..@");
     }
     
     @Test public void dying_when_surrounded_on_top_left_corner() {
-        assertOutcome(
+        check(
                 "X@.",
                 "@..",
                 "...");
     }
     
      @Test public void dying_when_surrounded_on_top_right_corner() {
-        assertOutcome(
+        check(
                 ".@X",
                 "..@",
                 "...");
     }
      
      @Test public void dying_when_surrounded_on_bottom_right_corner() {
-        assertOutcome(
+        check(
                 "...",
                 "..@",
                 ".@X");
     }   
    
      @Test public void dying_when_surrounded_on_bottom_left_corner() {
-        assertOutcome(
+        check(
                 "...",
                 "@..",
                 "X@.");
@@ -124,7 +124,7 @@ public class BoardTest {
      
     @Test
     public void dying_when_in_island() {
-        assertOutcome(
+        check(
                 ".....",
                 "..@..",
                 ".@X@.",
@@ -136,7 +136,7 @@ public class BoardTest {
     
     @Test
     public void dying_when_in_complex_island() {
-        assertOutcome(
+        check(
                 "..........",
                 ".....@....",
                 "...@@X@...",
@@ -148,7 +148,7 @@ public class BoardTest {
     
     @Test
     public void alive_when_complex_route_to_freedom() {
-        assertOutcome(
+        check(
                 "..........",
                 ".....@....",
                 "...@@O@...",
@@ -158,7 +158,7 @@ public class BoardTest {
         );
     }
     
-    private void assertOutcome(String... lines) {
+    private void check(String... lines) {
          Board board = BoardFactory.create(lines);
          for (int y = 0; y < lines.length; y++) {
              char[] cells = lines[y].toCharArray();
