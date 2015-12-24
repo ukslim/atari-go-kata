@@ -7,165 +7,148 @@ import org.junit.Test;
 public class BoardTest {
     @Test
     public void alive_when_alone() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "...",
                 ".O.",
                 "...");
-        assertFalse(board.isDying(1,1));
     }
     
     @Test
     public void alive_when_one_neighbour_below() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "...",
                 ".O.",
                 ".@.");
-        assertFalse(board.isDying(1,1));
     }
     
     @Test
     public void alive_when_one_neighbour_left() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "...",
                 "@O.",
                 "...");
-        assertFalse(board.isDying(1,1));
     }
     
     @Test
     public void alive_when_one_neighbour_above() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 ".@.",
                 ".O.",
                 "...");
-        assertFalse(board.isDying(1,1));
     }
     
     @Test
     public void alive_when_one_neighbour_right() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "...",
                 ".O@",
                 "...");
-        assertFalse(board.isDying(1,1));
     }
     
     @Test
     public void alive_when_three_neighbours() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "...",
                 "@O@",
                 ".@.");
-        assertFalse(board.isDying(1,1));
     }
     
     @Test
     public void dying_when_surrounded() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 ".....",
                 "..@..",
-                ".@O@.",
+                ".@X@.",
                 "..@..",
                 ".....");
-        assertTrue(board.isDying(2, 2));
     }
     
     @Test public void dying_when_surrounded_on_top_edge() {
-        Board board = BoardFactory.create(
-                ".@O@.",
+        assertOutcome(
+                ".@X@.",
                 "..@..",
                 ".....");
-        assertTrue(board.isDying(2, 0));
     }
     
     @Test public void dying_when_surrounded_on_left_edge() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "...",
                 "@..",
-                "O@.",
+                "X@.",
                 "@..",
                 "...");
-        assertTrue(board.isDying(0, 2));
     }
     
     @Test public void dying_when_surrounded_on_bottom() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "...",
                 ".@.",
-                "@O@");
-        assertTrue(board.isDying(1, 2));
+                "@X@");
     }
     
     @Test public void dying_when_surrounded_on_right() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "..@",
-                ".@O",
+                ".@X",
                 "..@");
-        assertTrue(board.isDying(2, 1));
     }
     
     @Test public void dying_when_surrounded_on_top_left_corner() {
-        Board board = BoardFactory.create(
-                "O@.",
+        assertOutcome(
+                "X@.",
                 "@..",
                 "...");
-        assertTrue(board.isDying(0, 0));
     }
     
      @Test public void dying_when_surrounded_on_top_right_corner() {
-        Board board = BoardFactory.create(
-                ".@O",
+        assertOutcome(
+                ".@X",
                 "..@",
                 "...");
-        assertTrue(board.isDying(2, 0));
     }
      
      @Test public void dying_when_surrounded_on_bottom_right_corner() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "...",
                 "..@",
-                ".@O");
-        assertTrue(board.isDying(2, 2));
+                ".@X");
     }   
    
      @Test public void dying_when_surrounded_on_bottom_left_corner() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "...",
                 "@..",
-                "O@.");
-        assertTrue(board.isDying(0, 2));
+                "X@.");
     }   
    
      
     @Test
     public void dying_when_in_island() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 ".....",
                 "..@..",
-                ".@O@.",
-                ".@O@.",
+                ".@X@.",
+                ".@X@.",
                 "..@..",
                 "....."
         );
-        assertTrue(board.isDying(2, 2));
     }
     
     @Test
     public void dying_when_in_complex_island() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "..........",
                 ".....@....",
-                "...@@O@...",
-                "..@O@O@...",
-                "..@OOO@...",
+                "...@@X@...",
+                "..@X@X@...",
+                "..@XXX@...",
                 "...@@@...."
         );
-        assertTrue(board.isDying(5, 2));
     }
     
     @Test
     public void alive_when_complex_route_to_freedom() {
-        Board board = BoardFactory.create(
+        assertOutcome(
                 "..........",
                 ".....@....",
                 "...@@O@...",
@@ -173,6 +156,29 @@ public class BoardTest {
                 "..@OOO@...",
                 "...@@@...."
         );
-        assertFalse(board.isDying(5, 2));
+    }
+    
+    private void assertOutcome(String... lines) {
+         Board board = BoardFactory.create(lines);
+         for (int y = 0; y < lines.length; y++) {
+             char[] cells = lines[y].toCharArray();
+             for (int x = 0; x < cells.length; x++) {
+                 char cell = cells[x];
+                assertCell(cell, board, x, y);
+             }
+        }
+    }
+
+    private void assertCell(char expectedState, Board board, int x, int y) {
+        switch(expectedState) {
+            case 'O':
+                assertFalse(String.format("Cell %d,%d is dying",x,y),board.isDying(x, y));
+                break;
+            case 'X':
+                assertTrue(String.format("Cell %d,%d is alive",x,y),board.isDying(x, y));
+                break;
+            default:
+                // nothing
+        }
     }
 }

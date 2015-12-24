@@ -26,6 +26,7 @@ class BoardFactory {
             case ' ':
                 return State.EMPTY;
             case 'O':
+            case 'X':
                 return State.WHITE;
             case '@':
                 return State.BLACK;
