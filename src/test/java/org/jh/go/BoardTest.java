@@ -4,6 +4,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
+/*
+The check() method takes a board description consisting of a varargs array
+of Strings describing a board. Acceptable characters are:
+   . - an empty cell
+   @ - a black stone
+   O - a white stone, expected to remain alive
+   X - a white stone, expected to die
+*/
 public class BoardTest {
     @Test
     public void alive_when_alone() {
