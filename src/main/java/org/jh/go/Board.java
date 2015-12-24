@@ -20,6 +20,9 @@ class Board {
     }
     
     public State stateAt(int x, int y) {
+        if(y<0 || x<0 || y>= ySize() || x>=xSize()) {
+            return State.BLACK;
+        }
         return cells[y][x];
     }
 

@@ -70,6 +70,73 @@ public class BoardTest {
         assertTrue(board.isDying(2, 2));
     }
     
+    @Test public void dying_when_surrounded_on_top_edge() {
+        Board board = BoardFactory.create(
+                ".@O@.",
+                "..@..",
+                ".....");
+        assertTrue(board.isDying(2, 0));
+    }
+    
+    @Test public void dying_when_surrounded_on_left_edge() {
+        Board board = BoardFactory.create(
+                "...",
+                "@..",
+                "O@.",
+                "@..",
+                "...");
+        assertTrue(board.isDying(0, 2));
+    }
+    
+    @Test public void dying_when_surrounded_on_bottom() {
+        Board board = BoardFactory.create(
+                "...",
+                ".@.",
+                "@O@");
+        assertTrue(board.isDying(1, 2));
+    }
+    
+    @Test public void dying_when_surrounded_on_right() {
+        Board board = BoardFactory.create(
+                "..@",
+                ".@O",
+                "..@");
+        assertTrue(board.isDying(2, 1));
+    }
+    
+    @Test public void dying_when_surrounded_on_top_left_corner() {
+        Board board = BoardFactory.create(
+                "O@.",
+                "@..",
+                "...");
+        assertTrue(board.isDying(0, 0));
+    }
+    
+     @Test public void dying_when_surrounded_on_top_right_corner() {
+        Board board = BoardFactory.create(
+                ".@O",
+                "..@",
+                "...");
+        assertTrue(board.isDying(2, 0));
+    }
+     
+     @Test public void dying_when_surrounded_on_bottom_right_corner() {
+        Board board = BoardFactory.create(
+                "...",
+                "..@",
+                ".@O");
+        assertTrue(board.isDying(2, 2));
+    }   
+   
+     @Test public void dying_when_surrounded_on_bottom_left_corner() {
+        Board board = BoardFactory.create(
+                "...",
+                "@..",
+                "O@.");
+        assertTrue(board.isDying(0, 2));
+    }   
+   
+     
     @Test
     public void dying_when_in_island() {
         Board board = BoardFactory.create(
