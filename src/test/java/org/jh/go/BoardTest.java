@@ -1,17 +1,8 @@
 package org.jh.go;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import static org.jh.go.BoardTestUtil.check;
 
-/*
-The check() method takes a board description consisting of a varargs array
-of Strings describing a board. Acceptable characters are:
-   . - an empty cell
-   @ - a black stone
-   O - a white stone, expected to remain alive
-   X - a white stone, expected to die
-*/
 public class BoardTest {
     @Test
     public void alive_when_alone() {
@@ -164,29 +155,5 @@ public class BoardTest {
                 "..@OOO@...",
                 "...@@@...."
         );
-    }
-    
-    private void check(String... lines) {
-         Board board = BoardFactory.create(lines);
-         for (int y = 0; y < lines.length; y++) {
-             char[] cells = lines[y].toCharArray();
-             for (int x = 0; x < cells.length; x++) {
-                 char cell = cells[x];
-                assertCell(cell, board, x, y);
-             }
-        }
-    }
-
-    private void assertCell(char expectedState, Board board, int x, int y) {
-        switch(expectedState) {
-            case 'O':
-                assertFalse(String.format("Cell %d,%d is dying",x,y),board.isDying(x, y));
-                break;
-            case 'X':
-                assertTrue(String.format("Cell %d,%d is alive",x,y),board.isDying(x, y));
-                break;
-            default:
-                // nothing
-        }
     }
 }

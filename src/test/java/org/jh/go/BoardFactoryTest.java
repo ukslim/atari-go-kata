@@ -5,12 +5,14 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.jh.go.Board.State.WHITE;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class BoardFactoryTest {
     
     @Test
     public void factory_creates_9x9_board_for_9x9_input() {
-        Board board = BoardFactory.create(
+        Board board = BoardTestUtil.create(
                 ".........",
                 ".........",
                 ".........",
@@ -26,7 +28,7 @@ public class BoardFactoryTest {
     
     @Test
     public void factory_places_white_cell() {
-        Board board = BoardFactory.create(
+        Board board = BoardTestUtil.create(
                 ".........",
                 "..O......",
                 ".........",
